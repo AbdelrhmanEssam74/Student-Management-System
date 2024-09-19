@@ -1,8 +1,10 @@
 <?php
+
 namespace PROJECT\HTTP;
 
 use PROJECT\HTTP\Request;
 use PROJECT\HTTP\Response;
+use PROJECT\View\View;
 
 class Route
 {
@@ -31,15 +33,23 @@ class Route
         $path = $this->request->path();
         $method = $this->request->method();
         $params = $this->request->params();
-        $action = self::$RoutesMap[$method][$path];
-        // If the action is a callback
-        if (is_callable($action)) {
-            call_user_func_array($action, $params);
-        }
 
-        // If the action is an array
-        if (is_array($action)) {
-            call_user_func_array([new $action[0], $action[1]], $params);
+        // Check if the method exists in the RoutesMap array
+        if (array_key_exists($method, self::$RoutesMap) && array_key_exists($path, self::$RoutesMap[$method])) {
+            $action = self::$RoutesMap[$method][$path];
+
+            // If the action is a callback
+            if (is_callable($action)) {
+                call_user_func_array($action, $params);
+            }
+
+            // If the action is an array
+            if (is_array($action)) {
+                call_user_func_array([new $action[0], $action[1]], $params);
+            }
+        } else {
+            // Handle a 404 error when the route or method is not found
+            View::makeErrorView('404');
         }
     }
 

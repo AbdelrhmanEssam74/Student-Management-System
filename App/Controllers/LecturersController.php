@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use PROJECT\View\View;
 
-class HomeController
+class LecturersController
 {
     public function index(): null
     {
-        return View::makeView("index");
+        return View::makeView("Lecturers");
     }
 }
