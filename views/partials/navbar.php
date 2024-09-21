@@ -1,28 +1,28 @@
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light ">
-        <div class="container-fluid">
-            <a href="/" class="navbar-brand">Schools</a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav w-100 ">
-                    <a href="/" class="nav-item nav-link active">Home</a>
-                    <a href="#" class="nav-item nav-link">Profile</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Messages</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Inbox</a>
-                            <a href="#" class="dropdown-item">Sent</a>
-                            <a href="#" class="dropdown-item">Drafts</a>
-                        </div>
-                    </div>
-                    <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
-                </div>
-                <div class="navbar-nav ms-auto">
-                   <button type="button" class=" nav-item btn btn-outline-primary mb-2">Login</button>
-                </div>
+<nav id="main-navbar" class="navbar navbar-expand-md fixed-top navbar-before-scroll shadow-0">
+
+<div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <span class="fw-bold text-light">YOUR-SCHOOLS</span>
+        </a>
+        <button class="navbar-toggler border" type="button" data-bs-toggle="collapse" data-bs-target="#nav_lc"
+                aria-controls="nav_lc" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav_lc">
+            <ul class="d-none d-lg-flex navbar-nav mx-auto  my-3 my-lg-0 position-absolute top-50 start-50 translate-middle">
+                <li class="nav-item me-4"><a class="nav-link text-light" href="#">About</a></li>
+                <li class="nav-item me-4"><a class="nav-link text-light" href="#">Services</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="#">Testimonials</a></li>
+            </ul>
+            <ul class="navbar-nav my-3 my-lg-0 d-lg-none">
+                <li class="nav-item me-4"><a class="nav-link text-light" href="#">About</a></li>
+                <li class="nav-item me-4"><a class="nav-link text-light" href="#">Services</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="#">Testimonials</a></li>
+            </ul>
+            <div class="ms-lg-auto">
+                <a class="btn btn-outline-primary me-2 text-light" href="#">Login</a>
+                <a class="btn btn-primary" href="#">Sign Up</a>
             </div>
         </div>
-    </nav>
-</div>
+    </div>
+</nav>
