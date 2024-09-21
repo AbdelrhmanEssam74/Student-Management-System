@@ -1,4 +1,5 @@
 <?php
+use PROJECT\Application;
 /**
  * @description
  * The env function is used to retrieve the value of an environment variable identified by the provided key.
@@ -43,3 +44,14 @@ if (!function_exists("view_path")):
         return base_path() . 'views/';
     }
 endif;
+
+if(!function_exists("app")){
+    function app(): ?Application
+    {
+        static $instance = null;
+        if(!$instance){
+            $instance = new Application;
+        }
+        return $instance;
+    }
+}
