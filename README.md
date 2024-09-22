@@ -24,25 +24,29 @@
 </div>
 
       .
-      ├── App/
+      ├── App/                    # Main application directory
       │   ├── controller          # Contains controller files for handling application logic
       │   └── models              # Contains model files for interacting with the database
       ├── Config/                 # Contains configuration files for the application
-      ├── Public/
+      ├── Public/                 # Publicly accessible files
       │   ├── index.php           # The entry point for the application
-      │   └── assets/
+      │   └── assets/             # Directory for static assets
       │       ├── css/            # Stores cascading style sheets
       │       ├── js/             # Stores JavaScript files
       │       └── images/         # Stores image assets
       ├── routes/                 # Contains route definitions for the application
-      ├── src/
+      ├── src/                    # Source code directory
       │   ├── HTTP/               # Contains HTTP-related functionality
       │   ├── support/            # Support classes for the application
       │   ├── view/               # Contains view-related classes
+      │   ├── Validation/          # Contains validation logic
+      │   │   ├── Rules/          # Contains validation rules
+      │   │       ├── Contract/    # Defines contracts for validation rules
       │   └── Application.php     # Main application logic
-      ├── views/
+      ├── views/                  # Contains view templates
       │   ├── errors/             # Contains error view templates
       │   ├── layout/             # Contains layout templates
-      │   ├── partials/           # Contains partial templates
-      |   └── index.php           # The main application file
-      └── README.md
+      │   ├── partials/           # Contains partial templates for reuse
+      │   └── index.php           # The main application file
+      └── README.md               # Documentation for the project
+
