@@ -2,6 +2,7 @@
 
 namespace PROJECT\Validation;
 
+use PROJECT\Validation\Massage;
 use PROJECT\Validation\ErrorBag;
 
 class Validation
@@ -15,16 +16,25 @@ class Validation
     public function make($data): void
     {
         $this->data = $data;              // Set the data to be validated
-        $this->errorBag = new ErrorBag;  // Create a new instance of ErrorBag
+        $this->errorBag = new ErrorBag();  // Create a new instance of ErrorBag
         $this->validate();                // Start the validation process
     }
 
     // Validates the data against the defined rules
     protected function validate(): void
     {
-        foreach ($this->rules as $field => $rule) {
-            var_dump($rule, $field);      // Debugging output for each rule and field
+        foreach ($this->rules as $field => $rules) {
+            foreach ($rules as $rule) {
+                if (!$rule->apply($field, $this->getFieldValue($field), $this->data)) {
+                    $this->errorBag->add($field, Massage::generator($rule, $field));
+                }
+            }
         }
+    }
+
+    public function getFieldValue($field): mixed
+    {
+        return $this->data[$field] ?? null;
     }
 
     // Sets the validation rules
@@ -42,7 +52,7 @@ class Validation
     // Retrieves validation errors, optionally for a specific field
     public function errors($key = null)
     {
-        return $key ? $this->errorBag->errors($key) : $this->errorBag->errors(); // Return errors for the specified key or all errors
+        return $key ? $this->errorBag->errors[$key] : $this->errorBag->errors; // Return errors for the specified key or all errors
     }
 
     // Gets the alias for a given field, or returns the field name if no alias exists

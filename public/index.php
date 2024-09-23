@@ -5,6 +5,7 @@ use PROJECT\support\Arr;
 use PROJECT\support\Config;
 use PROJECT\support\Hash;
 use PROJECT\Validation\Validation;
+use PROJECT\Validation\RequireRule;
 
 require_once '../src/support/helpers.php';
 require_once base_path() . 'vendor/autoload.php';
@@ -16,12 +17,14 @@ app()->run();
 $validator = new Validation();
 
 $validator->rules([
-    'username' => 'required|string',
-    'email' => 'required|email',
+    'username' => [new RequireRule()],
+]);
+
+$validator->make([
+    'username' => '',
 ]);
 echo "<pre>";
-$validator->make([
-    'username' => 'abdelrhman',
-    'email' => 'abdelrhman@gamail.com',
-]);
+var_dump($validator->errors());
 echo "</pre>";
+
+
