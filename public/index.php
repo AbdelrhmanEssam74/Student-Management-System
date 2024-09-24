@@ -1,12 +1,9 @@
 <?php
 
 use Dotenv\Dotenv;
-use PROJECT\support\Arr;
-use PROJECT\support\Config;
-use PROJECT\support\Hash;
 use PROJECT\Validation\Validation;
-use PROJECT\Validation\RequireRule;
-
+use PROJECT\Validation\Rules\RequireRule;
+use PROJECT\Validation\Rules\AlphaNum;
 require_once '../src/support/helpers.php';
 require_once base_path() . 'vendor/autoload.php';
 require_once base_path() . 'routes/web.php';
@@ -17,7 +14,7 @@ app()->run();
 $validator = new Validation();
 
 $validator->rules([
-    'username' => [new RequireRule()],
+    'username' => ['required' , 'alphaNum'],
 ]);
 
 $validator->make([
