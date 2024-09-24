@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJECT\Validation;
+namespace PROJECT\Validation\Rules;
 
 use PROJECT\Validation\Rules\Contract\Rules;
 

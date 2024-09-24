@@ -2,15 +2,18 @@
 
 namespace PROJECT\Validation;
 
-use PROJECT\Validation\Massage;
-use PROJECT\Validation\ErrorBag;
-
+use PROJECT\Validation\Rules\RequireRule;
+use PROJECT\Validation\Rules\AlphaNum;
 class Validation
 {
     protected array $data = [];          // Holds the data to be validated
     protected array $rules = [];         // Holds the validation rules
     protected ErrorBag $errorBag;        // Instance of ErrorBag for storing errors
     protected array $aliases = [];       // Holds field aliases for better error messages
+    protected array $rulesMap = [
+        'required' => RequireRule::class,
+        'alphaNum' => AlphaNum::class,
+    ];      // Holds the map of rules
 
     // Initializes the validation process with the provided data
     public function make($data): void
@@ -25,6 +28,10 @@ class Validation
     {
         foreach ($this->rules as $field => $rules) {
             foreach ($rules as $rule) {
+                if (is_string($rule))
+                {
+                    $rule = new $this->rulesMap[$rule];
+                }
                 if (!$rule->apply($field, $this->getFieldValue($field), $this->data)) {
                     $this->errorBag->add($field, Massage::generator($rule, $field));
                 }
