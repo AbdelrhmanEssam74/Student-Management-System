@@ -18,7 +18,7 @@ $validator->rules([
 ]);
 
 $validator->make([
-    'username' => '',
+    'username' => 'abdelrhman',
 ]);
 echo "<pre>";
 var_dump($validator->errors());

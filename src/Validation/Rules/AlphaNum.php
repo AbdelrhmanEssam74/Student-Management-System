@@ -9,7 +9,7 @@ class AlphaNum implements Rules
 
     public function apply($field, $value, $data): false|int
     {
-        return preg_match("/+[a-zA-Z0-9]+/", $value);
+        return preg_match("/[a-zA-Z0-9]+/", $value);
     }
 
     public function __toString()
