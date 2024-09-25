@@ -4,6 +4,8 @@ namespace PROJECT\Validation;
 
 use PROJECT\Validation\Rules\RequireRule;
 use PROJECT\Validation\Rules\AlphaNum;
+use PROJECT\Validation\Rules\MaxRule;
+use PROJECT\Validation\Rules\BetweenRule;
 
 class Validation
 {
@@ -14,6 +16,8 @@ class Validation
     protected array $rulesMap = [
         'required' => RequireRule::class,
         'alphaNum' => AlphaNum::class,
+        'max' => MaxRule::class,
+        'between' => BetweenRule::class,
     ];      // Holds the map of rules
 
     /**
@@ -21,7 +25,7 @@ class Validation
      *
      * @param mixed $data The data to be validated.
      */
-    public function make($data): void
+    public function make(mixed $data): void
     {
         $this->data = $data;              // Set the data to be validated
         $this->errorBag = new ErrorBag();  // Create a new instance of ErrorBag
@@ -46,10 +50,10 @@ class Validation
      * @param string $field The field to validate.
      * @param mixed $rule The rule to apply.
      */
-    protected function applyRule($field, $rule): void
+    protected function applyRule(string $field, mixed $rule): void
     {
         if (!$rule->apply($field, $this->getFieldValue($field), $this->data)) {
-            $this->errorBag->add($field, Massage::generator($rule, $field));
+            $this->errorBag->add($field, Massage::generator($rule, $this->alias($field)));
         }
     }
 
@@ -59,7 +63,7 @@ class Validation
      * @param array $rules The rules to resolve.
      * @return array The resolved rules.
      */
-    protected function resolveRule($rules): array
+    protected function resolveRule(array $rules): array
     {
         return array_map(function ($rule) {
             if (is_string($rule)) {
@@ -74,9 +78,12 @@ class Validation
      * @param string $rule The rule name.
      * @return mixed The rule object.
      */
-    protected function getRuleFromString($rule)
+    protected function getRuleFromString(string $rule): mixed
     {
-        return new $this->rulesMap[$rule];
+        $exploded = explode(':', $rule);
+        $rule = $exploded[0];
+        $options = explode(",", end($exploded));
+        return new $this->rulesMap[$rule](...$options);
     }
 
     /**
@@ -85,7 +92,7 @@ class Validation
      * @param string $field The field to retrieve the value for.
      * @return mixed|null The field value or null if not found.
      */
-    public function getFieldValue($field): mixed
+    public function getFieldValue(string $field): mixed
     {
         return $this->data[$field] ?? null;
     }
@@ -95,7 +102,7 @@ class Validation
      *
      * @param array $rules The validation rules to set.
      */
-    public function rules($rules): void
+    public function rules(array $rules): void
     {
         $this->rules = $rules;            // Assign the provided rules to the rules property
     }
@@ -116,7 +123,7 @@ class Validation
      * @param string|null $key The field to retrieve errors for.
      * @return mixed The errors for the specified key or all errors.
      */
-    public function errors($key = null)
+    public function errors(string $key = null): mixed
     {
         return $key ? $this->errorBag->errors[$key] : $this->errorBag->errors; // Return errors for the specified key or all errors
     }
@@ -127,7 +134,7 @@ class Validation
      * @param string $field The field to get the alias for.
      * @return string The alias if it exists, otherwise the field name.
      */
-    public function alias($field)
+    public function alias(string $field): string
     {
         return $this->aliases[$field] ?? $field; // Return the alias if it exists, otherwise return the field name
     }
