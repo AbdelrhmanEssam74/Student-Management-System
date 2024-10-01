@@ -2,23 +2,14 @@
 
 namespace PROJECT\Validation;
 
-use PROJECT\Validation\Rules\RequireRule;
-use PROJECT\Validation\Rules\AlphaNum;
-use PROJECT\Validation\Rules\MaxRule;
-use PROJECT\Validation\Rules\BetweenRule;
-
 class Validation
 {
+    use RuleMap;
+
     protected array $data = [];          // Holds the data to be validated
     protected array $rules = [];         // Holds the validation rules
     protected ErrorBag $errorBag;        // Instance of ErrorBag for storing errors
     protected array $aliases = [];       // Holds field aliases for better error messages
-    protected array $rulesMap = [
-        'required' => RequireRule::class,
-        'alphaNum' => AlphaNum::class,
-        'max' => MaxRule::class,
-        'between' => BetweenRule::class,
-    ];      // Holds the map of rules
 
     /**
      * Initializes the validation process with the provided data.
@@ -63,8 +54,9 @@ class Validation
      * @param array $rules The rules to resolve.
      * @return array The resolved rules.
      */
-    protected function resolveRule(array $rules): array
+    protected function resolveRule(array|string $rules): array
     {
+        $rules = str_contains($rules, '|') ? explode('|', $rules) : array($rules);
         return array_map(function ($rule) {
             if (is_string($rule)) {
                 return $this->getRuleFromString($rule);
@@ -83,7 +75,7 @@ class Validation
         $exploded = explode(':', $rule);
         $rule = $exploded[0];
         $options = explode(",", end($exploded));
-        return new $this->rulesMap[$rule](...$options);
+        return self::resolve($rule, $options);
     }
 
     /**
