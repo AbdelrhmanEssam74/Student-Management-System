@@ -5,6 +5,7 @@ namespace PROJECT\Validation;
 class Validation
 {
     use RuleMap;
+    use RulesResolver;
 
     protected array $data = [];          // Holds the data to be validated
     protected array $rules = [];         // Holds the validation rules
@@ -29,12 +30,11 @@ class Validation
     protected function validate(): void
     {
         foreach ($this->rules as $field => $rules) {
-            foreach ($this->resolveRule($rules) as $rule) {
+            foreach (self::RulesResolverMake($rules) as $rule) {
                 $this->applyRule($field, $rule);
             }
         }
     }
-
     /**
      * Applies a specific validation rule to a field.
      *
@@ -48,35 +48,6 @@ class Validation
         }
     }
 
-    /**
-     * Resolves the validation rules provided for a field.
-     *
-     * @param array $rules The rules to resolve.
-     * @return array The resolved rules.
-     */
-    protected function resolveRule(array|string $rules): array
-    {
-        $rules = str_contains($rules, '|') ? explode('|', $rules) : array($rules);
-        return array_map(function ($rule) {
-            if (is_string($rule)) {
-                return $this->getRuleFromString($rule);
-            }
-        }, $rules);
-    }
-
-    /**
-     * Retrieves the rule object based on the rule name provided.
-     *
-     * @param string $rule The rule name.
-     * @return mixed The rule object.
-     */
-    protected function getRuleFromString(string $rule): mixed
-    {
-        $exploded = explode(':', $rule);
-        $rule = $exploded[0];
-        $options = explode(",", end($exploded));
-        return self::resolve($rule, $options);
-    }
 
     /**
      * Retrieves the value of a field from the data array.
