@@ -1,6 +1,7 @@
 <?php
 
 use PROJECT\Application;
+use PROJECT\support\Hash;
 
 /**
  * @description
@@ -55,6 +56,13 @@ if (!function_exists("app")) {
             $instance = new Application;
         }
         return $instance;
+    }
+}
+
+if (!function_exists("bcrypt")) {
+    function bcrypt($password): string
+    {
+        return Hash::hash($password);
     }
 }
 

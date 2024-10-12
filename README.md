@@ -42,6 +42,11 @@
       │   ├── Validation/          # Contains validation logic
       │   │   ├── Rules/          # Contains validation rules
       │   │       ├── Contract/    # Defines contracts for validation rules
+      │   ├── Database/           # 
+      │   │   ├── Concerns/          #
+      │   │   ├── Grammars/          #
+      │   │   ├── Managers/          #
+      │   │       ├── Contract/    # 
       │   └── Application.php     # Main application logic
       ├── views/                  # Contains view templates
       │   ├── errors/             # Contains error view templates
