@@ -11,9 +11,13 @@ $env->load();
 app()->run();
 $validate = new Validation();
 $validate->rules([
-    'username' => 'required|max:25|alphaNum',
+    'password' => 'required|password_confirmation',
+    'password_confirmation' => 'required'
 ]);
-$validate->make(['username' => '']);
+$validate->make([
+    'password' => 'abc',
+    'password_confirmation' => 'abc'
+    ]);
 
 echo "<pre>";
 print_r($validate->errors());
