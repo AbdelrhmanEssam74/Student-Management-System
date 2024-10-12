@@ -10,7 +10,7 @@ interface DatabaseManager
 
     public function create($data);
 
-    public function read($columns, $filter = null);
+    public function read($columns = '*', $filter = null);
 
     public function update($column, $data);
 
