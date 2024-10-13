@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use PROJECT\support\str;
+
 abstract class Model
 {
     protected static $instance;
@@ -29,7 +31,7 @@ abstract class Model
         return self::$instance;
     }
 
-    public function getTableName()
+    public function getTableName(): string
     {
         return str::lower(str::plural(class_basename(self::$instance)));
     }

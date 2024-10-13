@@ -1,8 +1,8 @@
 <?php
 
 use Dotenv\Dotenv;
-use App\Models\User;
-use PROJECT\Validation\Validation;
+use PROJECT\support\str;
+
 
 require_once '../src/support/helpers.php';
 require_once base_path() . 'vendor/autoload.php';
@@ -12,6 +12,6 @@ $env->load();
 app()->run();
 
 echo "<pre>";
-print_r(class_basename(User::class));
+print_r(str::singular("categories"));
 echo "</pre>";
 
