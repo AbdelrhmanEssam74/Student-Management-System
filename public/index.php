@@ -17,3 +17,9 @@ print_r(MYSQLGrammar::buildInsertQuery([
 ]));
 echo "</pre>";
 
+echo "<pre>";
+print_r(MYSQLGrammar::buildSelectQuery(
+    ['username', 'password', 'email', 'time'],
+    ['`username`', "=", "admin"]
+));
+echo "</pre>";

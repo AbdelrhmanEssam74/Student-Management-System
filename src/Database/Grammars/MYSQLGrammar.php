@@ -19,4 +19,16 @@ class MYSQLGrammar
         $query = "INSERT INTO " . Model::getTableName() . " (`" . implode('` ,`', $keys) . "`)";
         return $query;
     }
+
+    public static function buildSelectQuery($columns, $filter): string
+    {
+        if (is_array($columns)) {
+            $columns = "`" . implode("`, `", $columns) . "`";
+        }
+        $query = "SELECT {$columns} FROM " . Model::getTableName();
+        if ($filter) {
+            $query .= " WHERE {$filter[0]} {$filter[1]} ?";
+        }
+        return $query;
+    }
 }
