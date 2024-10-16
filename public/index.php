@@ -2,7 +2,7 @@
 
 use Dotenv\Dotenv;
 use PROJECT\support\str;
-
+use PROJECT\Database\Grammars\MYSQLGrammar;
 
 require_once '../src/support/helpers.php';
 require_once base_path() . 'vendor/autoload.php';
@@ -12,6 +12,8 @@ $env->load();
 app()->run();
 
 echo "<pre>";
-print_r(str::singular("categories"));
+print_r(MYSQLGrammar::buildInsertQuery([
+    'username', 'password', 'email', 'time'
+]));
 echo "</pre>";
 

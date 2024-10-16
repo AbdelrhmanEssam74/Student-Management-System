@@ -2,38 +2,21 @@
 
 namespace PROJECT\Database\Grammars;
 
-use PROJECT\Database\Managers\Contracts\DatabaseManager;
+use App\Models\Model;
 
-class MYSQLGrammar implements DatabaseManager
+class MYSQLGrammar
 {
-    protected static $instance = null;
-
-    public function connect(): \PDO
+    public static function buildInsertQuery($keys): string
     {
-        if (!self::$instance) {
-            self::$instance = new \PDO(env('DB_DRIVER') . ":host=" . env("DB_HOST") . ";dbname=" . env("DB_Database"), env("DB_USERNAME"), env("DB_PASSWORD"));
+        $values = "";
+        for ($i = 1; $i <= count($keys); $i++) {
+            $values .= "?";
+            if ($i < count($keys)) {
+                $values .= ", ";
+            }
         }
-        return self::$instance;
-    }
-
-    public function query(string $query, $values = [])
-    {
-    }
-
-    public function create($data)
-    {
-    }
-
-    public function read($columns = '*', $filter = null)
-    {
-    }
-
-    public function update($column, $data)
-    {
-    }
-
-    public function delete($columns)
-    {
-        // TODO: Implement delete() method.
+        var_dump($values);
+        $query = "INSERT INTO " . Model::getTableName() . " (`" . implode('` ,`', $keys) . "`)";
+        return $query;
     }
 }
