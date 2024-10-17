@@ -23,3 +23,14 @@ print_r(MYSQLGrammar::buildSelectQuery(
     ['`username`', "=", "admin"]
 ));
 echo "</pre>";
+echo "<pre>";
+print_r(MYSQLGrammar::buildUpdateQuery(
+    ['username', 'password', 'email', 'time'],
+    "id"
+));
+echo "</pre>";
+echo "<pre>";
+print_r(MYSQLGrammar::buildDeleteQuery(
+    "id"
+));
+echo "</pre>";

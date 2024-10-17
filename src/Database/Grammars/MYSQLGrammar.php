@@ -31,4 +31,20 @@ class MYSQLGrammar
         }
         return $query;
     }
+
+    public static function buildDeleteQuery($where): string
+    {
+        $query = "DELETE FROM " . Model::getTableName() . " WHERE `{$where}` = ?";
+        return $query;
+    }
+
+    public static function buildUpdateQuery($keys, $where): string
+    {
+        $query = "UPDATE " . Model::getTableName() . " SET ";
+        foreach ($keys as $key) {
+            $query .= " `{$key}` = ?, ";
+        }
+        $query = rtrim($query, ', ') . " WHERE `{$where}` = ?";
+        return $query;
+    }
 }
