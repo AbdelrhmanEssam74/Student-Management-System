@@ -6,20 +6,20 @@ use App\Models\Model;
 
 class MYSQLGrammar
 {
+
     public static function buildInsertQuery($keys): string
     {
-        $values = "";
+        $placeholders = "";
         for ($i = 1; $i <= count($keys); $i++) {
-            $values .= "?";
+            $placeholders .= "?";
             if ($i < count($keys)) {
-                $values .= ", ";
+                $placeholders .= ", ";
             }
         }
-        var_dump($values);
         $query = "INSERT INTO " . Model::getTableName() . " (`" . implode('` ,`', $keys) . "`)";
+        $query .= " VALUES (" . $placeholders . ")";
         return $query;
     }
-
     public static function buildSelectQuery($columns, $filter): string
     {
         if (is_array($columns)) {
@@ -32,19 +32,23 @@ class MYSQLGrammar
         return $query;
     }
 
-    public static function buildDeleteQuery($where): string
+    public static function buildDeleteQuery(): string
     {
-        $query = "DELETE FROM " . Model::getTableName() . " WHERE `{$where}` = ?";
+        $query = "DELETE FROM " . Model::getTableName() . " WHERE `user_id` = ?";
         return $query;
     }
 
-    public static function buildUpdateQuery($keys, $where): string
+    public static function buildUpdateQuery($keys): string
     {
+        // Start the update query
         $query = "UPDATE " . Model::getTableName() . " SET ";
+
+        // Loop through keys to build the SET part of the query
         foreach ($keys as $key) {
-            $query .= " `{$key}` = ?, ";
+            $query .= "`{$key}` = ?, ";  // No quotes around the placeholder
         }
-        $query = rtrim($query, ', ') . " WHERE `{$where}` = ?";
-        return $query;
+        // Remove the last comma and space, and add the WHERE clause
+        return rtrim($query, ', ') . " WHERE user_id = ?";
     }
+
 }

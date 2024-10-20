@@ -20,26 +20,42 @@ class MYSQLManager implements DatabaseManager
     public function query(string $query, $values = [])
     {
         $stm = self::$instance->prepare($query);
-        for ($i = 1; $i < count($values); $i++) {
+        for ($i = 1; $i <= count($values); $i++) {
             $stm->bindValue($i, $values[$i - 1]);
         }
         $stm->execute();
-        return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        return $stm->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function create($data): string
+    public function create($data)
     {
         $query = MYSQLGrammar::buildInsertQuery(array_keys($data));
-        $stm = self::$instance->prepar($query);
-        return $query;
+        $stm = self::$instance->prepare($query);
+        $values = array_values($data);
+        for ($i = 1; $i <= count($values); $i++) {
+            $stm->bindValue($i, $values[$i - 1]);
+
+        }
+        return $stm->execute();
     }
 
     public function read($columns = '*', $filter = null)
     {
     }
 
-    public function update($column, $data)
+    public function update($id, $data)
     {
+        // TODO fix this method
+        $query = MYSQLGrammar::buildUpdateQuery(array_keys($data));
+        $stm = self::$instance->prepare($query);
+        $values = array_values($data);
+        for ($i = 1; $i <= count($values); $i++) {
+            $stm->bindValue($i, $values[$i - 1]);
+            if ($i == count($values)) {
+                $stm->bindValue($i + 1, $id);
+            }
+        }
+        return $stm->execute();
     }
 
     public function delete($columns)

@@ -12,7 +12,7 @@ interface DatabaseManager
 
     public function read($columns = '*', $filter = null);
 
-    public function update($column, $data);
+    public function update($id ,$data);
 
     public function delete($columns);
 

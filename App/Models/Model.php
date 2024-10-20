@@ -8,10 +8,24 @@ abstract class Model
 {
     protected static $instance;
 
-    public function create($data)
+    public static function create($data)
     {
         self::$instance = static::class;
         return app()->db->create($data);
+    }
+
+    public static function update($id, array $attributes)
+    {
+        self::$instance = static::class;
+
+        return app()->db->update($id, $attributes);
+    }
+
+    public static function delete($id)
+    {
+        self::$instance = static::class;
+
+        return app()->db->delete($id);
     }
 
     public function all()
