@@ -10,27 +10,6 @@ require_once base_path() . 'routes/web.php';
 $env = Dotenv::createImmutable(base_path());
 $env->load();
 app()->run();
-
 echo "<pre>";
-print_r(MYSQLGrammar::buildInsertQuery([
-    'username', 'password', 'email', 'time'
-]));
-echo "</pre>";
-
-echo "<pre>";
-print_r(MYSQLGrammar::buildSelectQuery(
-    ['username', 'password', 'email', 'time'],
-    ['`username`', "=", "admin"]
-));
-echo "</pre>";
-echo "<pre>";
-print_r(MYSQLGrammar::buildUpdateQuery(
-    ['username', 'password', 'email', 'time'],
-    "id"
-));
-echo "</pre>";
-echo "<pre>";
-print_r(MYSQLGrammar::buildDeleteQuery(
-    "id"
-));
+print_r(app()->db->row("select * from users"));
 echo "</pre>";

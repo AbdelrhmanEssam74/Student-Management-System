@@ -2,6 +2,7 @@
 
 namespace PROJECT\Database;
 
+use PROJECT\Database\Concerns\ConnectsTo;
 use PROJECT\Database\Managers\Contracts\DatabaseManager;
 
 class DB
@@ -20,7 +21,7 @@ class DB
         return self::connect($this->manager);
     }
 
-    protected function row(string $query, $value)
+    protected function row(string $query, $value = [])
     {
         return $this->manager->query($query, $value);
     }

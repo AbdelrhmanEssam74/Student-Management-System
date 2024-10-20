@@ -2,6 +2,8 @@
 
 namespace PROJECT;
 
+use PROJECT\Database\DB;
+use PROJECT\Database\Managers\MYSQLManager;
 use PROJECT\HTTP\Request;
 use PROJECT\HTTP\Response;
 use PROJECT\HTTP\Route;
@@ -13,6 +15,7 @@ class Application
     protected Request $request;
     protected Response $response;
     protected Config $config;
+    protected DB $db;
 
     public function __construct()
     {
@@ -20,6 +23,15 @@ class Application
         $this->response = new Response();
         $this->route = new Route($this->request, $this->response);
         $this->config = new Config($this->loadConfig());
+        $this->db = new DB($this->getDBDriver());
+    }
+
+    protected function getDBDriver(): MYSQLManager
+    {
+        return match (env("DB_DRIVER")) {
+            'mysql' => new MYSQLManager(),
+            default => new MYSQLManager
+    };
     }
 
     protected function loadConfig(): array
@@ -38,6 +50,7 @@ class Application
 
     public function run(): void
     {
+        $this->db->init();
         $this->route->resolve();
     }
 
