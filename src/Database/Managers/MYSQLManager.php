@@ -27,7 +27,11 @@ class MYSQLManager implements DatabaseManager
         return $stm->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function create($data)
+    /**
+     * @param $data ["Column Name" => "Value"]
+     * @return mixed
+     */
+    public function create($data): mixed
     {
         $query = MYSQLGrammar::buildInsertQuery(array_keys($data));
         $stm = self::$instance->prepare($query);
@@ -45,7 +49,6 @@ class MYSQLManager implements DatabaseManager
 
     public function update($id, $data)
     {
-        // TODO fix this method
         $query = MYSQLGrammar::buildUpdateQuery(array_keys($data));
         $stm = self::$instance->prepare($query);
         $values = array_values($data);
@@ -58,7 +61,11 @@ class MYSQLManager implements DatabaseManager
         return $stm->execute();
     }
 
-    public function delete($columns)
+    public function delete($id)
     {
+        $query = MYSQLGrammar::buildDeleteQuery();
+        $stm = self::$instance->prepare($query);
+        $stm->bindValue(":user_id", $id);
+        return $stm->execute();
     }
 }

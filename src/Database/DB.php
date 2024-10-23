@@ -36,6 +36,16 @@ class DB
         return $this->manager->read($columns, $filter);
     }
 
+    protected function update($id, $attributes)
+    {
+        return $this->manager->update($id, $attributes);
+    }
+
+    protected function delete($id)
+    {
+        return $this->manager->delete($id);
+    }
+
     public function __call($method, $args)
     {
         if (method_exists($this, $method)) {

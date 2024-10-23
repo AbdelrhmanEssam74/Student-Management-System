@@ -12,11 +12,19 @@ $env->load();
 app()->run();
 $m = new MYSQLManager();
 //var_dump($m->update("6714f8e5f385d", ["firstname" => "abdelrhman"]));
-var_dump(
-    User::update("6714f8e5f385d", ["firstname" => "abdelrhman"])
-);
-
-
+//User::create([
+//    "firstname" => 'fatma',
+//    "lastname" => "mahmoud",
+//    'date' => date("Y-m-d H:i:s"),
+//    "user_id" => uniqid(),
+//    "school_id" => 995,
+//    "gender" => "female",
+//    "position" => 'admin'
+//]);
+//var_dump(
+//    User::update("6714f8e5f385d", ["firstname" => "abdelrhman"])
+//);
+var_dump(User::delete( "6718bc19c2dc0"));
 
 //echo "<pre>";
 //print_r(app()->db->row("select * from users"));

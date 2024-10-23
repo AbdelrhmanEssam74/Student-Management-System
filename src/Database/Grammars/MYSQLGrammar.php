@@ -34,8 +34,7 @@ class MYSQLGrammar
 
     public static function buildDeleteQuery(): string
     {
-        $query = "DELETE FROM " . Model::getTableName() . " WHERE `user_id` = ?";
-        return $query;
+        return "DELETE FROM " . Model::getTableName() . " WHERE user_id = :user_id";
     }
 
     public static function buildUpdateQuery($keys): string

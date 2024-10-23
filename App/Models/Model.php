@@ -17,7 +17,6 @@ abstract class Model
     public static function update($id, array $attributes)
     {
         self::$instance = static::class;
-
         return app()->db->update($id, $attributes);
     }
 
