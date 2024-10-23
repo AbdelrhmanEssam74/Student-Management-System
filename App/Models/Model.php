@@ -27,19 +27,19 @@ abstract class Model
         return app()->db->delete($id);
     }
 
-    public function all()
+    public static function all()
     {
         self::$instance = static::class;
         return app()->db->read();
     }
 
-    public function where($filter, $columns = "*")
+    public static function where($filter, $columns = "*")
     {
         self::$instance = static::class;
         return app()->db->read($columns, $filter);
     }
 
-    public function getModel()
+    public static function getModel()
     {
         return self::$instance;
     }

@@ -2,6 +2,7 @@
 
 namespace PROJECT\Database\Managers;
 
+use App\Models\Model;
 use PROJECT\Database\Grammars\MYSQLGrammar;
 use PROJECT\Database\Managers\Contracts\DatabaseManager;
 
@@ -43,8 +44,20 @@ class MYSQLManager implements DatabaseManager
         return $stm->execute();
     }
 
-    public function read($columns = '*', $filter = null)
+    /**
+     * @param $columns => ["column1", "column2" , ...]
+     * @param $filter => ["where_condition", "operator", "value"]
+     * @return string
+     */
+    public function read($columns = '*', $filter = null): mixed
     {
+        $query = MYSQLGrammar::buildSelectQuery($columns, $filter);
+        $stm = self::$instance->prepare($query);
+        if ($filter) {
+            $stm->bindValue(1, $filter[2]);
+        }
+        $stm->execute();
+        return  $stm->fetchAll(\PDO::FETCH_CLASS,Model::getModel());
     }
 
     public function update($id, $data)
@@ -65,7 +78,7 @@ class MYSQLManager implements DatabaseManager
     {
         $query = MYSQLGrammar::buildDeleteQuery();
         $stm = self::$instance->prepare($query);
-        $stm->bindValue(":user_id", $id);
+        $stm->bindValue(1, $id);
         return $stm->execute();
     }
 }
