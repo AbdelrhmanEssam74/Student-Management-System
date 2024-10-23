@@ -2,12 +2,14 @@
 
 namespace PROJECT;
 
+use mysql_xdevapi\Session;
 use PROJECT\Database\DB;
 use PROJECT\Database\Managers\MYSQLManager;
 use PROJECT\HTTP\Request;
 use PROJECT\HTTP\Response;
 use PROJECT\HTTP\Route;
 use PROJECT\support\Config;
+use PROJECT\support\Sessions;
 
 class Application
 {
@@ -16,11 +18,13 @@ class Application
     protected Response $response;
     protected Config $config;
     protected DB $db;
+    protected Sessions $session;
 
     public function __construct()
     {
         $this->request = new Request();
         $this->response = new Response();
+        $this->session = new Sessions();
         $this->route = new Route($this->request, $this->response);
         $this->config = new Config($this->loadConfig());
         $this->db = new DB($this->getDBDriver());
