@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use PROJECT\View\View;
 
-class LecturersController
+class SignupController
 {
     public function index(): null
     {
-        return View::makeView("Lecturers");
+        return View::makeView("auth.signup");
     }
 }

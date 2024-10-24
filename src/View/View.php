@@ -25,15 +25,17 @@ class View
 
     private static function getViewContent($view, $isError = false, array $params = [])
     {
+
         $path = $isError ? view_path() . 'errors/' : view_path();
         if (str_contains($view, '.')):
             $views = explode('.', $view);
             foreach ($views as $view) :
-                if (is_dir($view)):
+                if (is_dir($path . "/" . $view)):
                     $path .= $view . '/';
                 endif;
             endforeach;
             $view = $path . end($views) . ".php";
+
         else:
             $view = $path . $view . ".php";
         endif;
