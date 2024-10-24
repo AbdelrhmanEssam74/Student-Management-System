@@ -1,7 +1,5 @@
-<?php include view_path() . 'partials/Back_to_top_button.php' ?>
-
+<?php include view_path() . 'partials/navbar.php' ?>
 <div class="hero">
-    <?php include view_path() . 'partials/navbar.php' ?>
     <div class="d-flex min-vh-100" lc-helper="background">
         <div class="align-self-center text-center text-light col-md-8 offset-md-2">
             <div class="lc-block mb-4">
@@ -16,9 +14,7 @@
                         dui.</p>
 
                     <p class="lead">Sim in vestibulum metus pulvinar sit amet.
-
                     </p>
-
                 </div>
             </div>
         </div>

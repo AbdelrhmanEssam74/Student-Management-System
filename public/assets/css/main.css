@@ -17,7 +17,7 @@ nav ul a:after {
     content: "";
     position: absolute;
     height: 2px;
-    background-color: azure;
+    background-color: #171c1c;
     width:0%;
     bottom: 12%;
     left: 0;
